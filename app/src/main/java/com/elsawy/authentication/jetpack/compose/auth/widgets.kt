@@ -19,25 +19,15 @@ import com.elsawy.authentication.jetpack.compose.R
 import com.elsawy.authentication.jetpack.compose.ui.theme.Blue
 import com.elsawy.authentication.jetpack.compose.ui.theme.TextWhite
 
-@Composable
-fun MyTextField(textValue: String, label: String, OnValueChange: (String) -> Unit) {
-   OutlinedTextField(
-      value = textValue,
-      onValueChange = OnValueChange,
-      label = { Text(text = "Email Address", fontSize = 18.sp, color = Color.Black) },
-      singleLine = true,
-      modifier = Modifier.fillMaxWidth(0.8f),
-      colors = TextFieldDefaults.outlinedTextFieldColors(
-         unfocusedBorderColor = Color.Black, textColor = Color.Black
-      )
-   )
-}
 
 @Composable
-fun PasswordTextField(
-   textValue: String, OnValueChange: (String) -> Unit,
-   label: String, passwordVisibility: Boolean,
-   onIconClick: () -> Unit,
+fun TextField(
+   textValue: String,
+   OnValueChange: (String) -> Unit,
+   label: String,
+   passwordVisibility: Boolean = false,
+   isPassword: Boolean = false,
+   onIconClick: () -> Unit = {},
 ) {
    OutlinedTextField(
       value = textValue,
@@ -50,13 +40,14 @@ fun PasswordTextField(
          unfocusedBorderColor = Color.Black, textColor = Color.Black
       ),
       trailingIcon = {
-         IconButton(onClick = onIconClick) {
-            Icon(
-               painter = painterResource(R.drawable.ic_baseline_remove_red_eye_24),
-               contentDescription = "Password",
-               tint = if (passwordVisibility) Blue else Color.Gray
-            )
-         }
+         if (isPassword)
+            IconButton(onClick = onIconClick) {
+               Icon(
+                  painter = painterResource(R.drawable.ic_baseline_remove_red_eye_24),
+                  contentDescription = "Password",
+                  tint = if (passwordVisibility) Blue else Color.Gray
+               )
+            }
       }
    )
 }
